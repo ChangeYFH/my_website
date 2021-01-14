@@ -2,13 +2,6 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import axios from 'axios'
 import Home from './views/Home.vue'
-import Login from './views/Login.vue'
-import Signup from './views/Signup.vue'
-import Post from './views/Post.vue'
-import CreatePost from './views/CreatePost.vue'
-import CreateUserInfo from './views/CreateUserInfo.vue'
-import History from './views/History.vue'
-import Collection from './views/Collection.vue'
 import store from './store.js'// 需要直接引入store，使用this.$store不行，因为该文件并不是组件
 
 Vue.use(VueRouter)
@@ -22,7 +15,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: Login,
+    component: () => import('./views/Login.vue'),
     meta: {
       redirectAlreadyLogin: true
     }
@@ -30,7 +23,7 @@ const routes = [
   {
     path: '/signup',
     name: 'Signup',
-    component: Signup,
+    component: () => import('./views/Signup.vue'),
     meta: {
       redirectAlreadyLogin: true
     }
@@ -38,38 +31,33 @@ const routes = [
   {
     path: '/post/:id',
     name: 'Post',
-    component: Post
+    component: () => import('./views/Post.vue')
   },
   {
     path: '/createPost/:id',
     name: 'CreatePost',
-    component: CreatePost
-  },
-  {
-    path: '/createPost',
-    name: 'CreatePost',
-    component: CreatePost
+    component: () => import('./views/CreatePost.vue')
   },
   {
     path: '/createUserInfo',
-    name: CreateUserInfo,
-    component: CreateUserInfo,
+    name: 'CreateUserInfo',
+    component: () => import('./views/CreateUserInfo.vue'),
     meta: {
       requiredLogin: true
     }
   },
   {
     path: '/history',
-    name: History,
-    component: History,
+    name: 'History',
+    component: () => import('./views/History.vue'),
     meta: {
       requiredLogin: true
     }
   },
   {
     path: '/collection',
-    name: Collection,
-    component: Collection,
+    name: 'Collection',
+    component: () => import('./views/Collection.vue'),
     meta: {
       requiredLogin: true
     }

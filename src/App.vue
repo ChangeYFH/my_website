@@ -1,9 +1,11 @@
 <template>
   <div class="App">
     <global-header />
-    <keep-alive>
-      <router-view class="view"></router-view>
-    </keep-alive>
+    <div class="view"> <!-- 由于router-view中的组件加载过慢，为了防止抖动，使用view元素提前占位 -->
+      <keep-alive>
+        <router-view></router-view>
+      </keep-alive>
+    </div>
     <global-footer class="footer"/>
   </div>
 </template>
@@ -24,6 +26,6 @@ export default {
 <style lang="scss" scoped>
   .view{
     // 为了当内容很少时footer依然在最下面
-    min-height: calc(100vh - 110px);
+    min-height: calc(100vh - 100px);
   }
 </style>

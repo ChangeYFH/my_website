@@ -5,7 +5,10 @@
         <sidebar :sidebarList="sidebarList"></sidebar>
       </div>
       <div class="center">
-        <div class="article-and-comment">
+        <svg v-show="!content" class="load" viewBox="25 25 50 50">
+            <circle class="loading" cx="50" cy="50" r="20" fill="none" />
+        </svg>
+        <div v-show="content" class="article-and-comment">
           <h2>{{title}}</h2>
           <router-link tag="span" :to="`/createPost/${$route.params.id}`" v-if="$store.state.user.permission==='1'" >编辑</router-link>
           <span @click="deleteArticle" v-if="$store.state.user.permission==='1'">删除</span><br>
@@ -13,7 +16,7 @@
           <article v-html="content"></article>
           <comment :id="$route.params.id"></comment>
         </div>
-        <div class="recommend-container">
+        <div v-show="content" class="recommend">
           <post-list title="推荐阅读" :list="recommendList" @isBottom="getRecommendList" ref="postList"/>
         </div>
       </div>
@@ -34,7 +37,7 @@ import Comment from '../components/Comment.vue'
 import PostList from '../components/PostList.vue'
 import marked from 'marked'
 import verifyLogin from '../mixins/verifyLogin.js'
-import highlight from 'highlight.js'
+// import highlight from 'highlight'
 
 export default {
   name: 'Post',
@@ -60,6 +63,7 @@ export default {
     // 改变路由时触发下面的程序
     $route () {
       if (this.$route.name === 'Post') { // 防止返回home时改变路由，从而触发下面的函数
+        this.content = null
         window.scrollTo(0, 0)
         this.recommendList = []
         // 获取文章内容后再获取推荐文章列表，因为获取推荐文章列表时需要c_id
@@ -94,7 +98,7 @@ export default {
         // 在下一次DOM更新循环之后将code中的内容高亮化
         this.$nextTick(() => {
           document.querySelectorAll('pre code').forEach(ele => {
-            highlight.highlightBlock(ele)
+            window.hljs.highlightBlock(ele)
           })
         })
         // 如果url中有参数position且值为comment则活动到comment处
@@ -116,7 +120,7 @@ export default {
       if (this.$store.state.user.isLogined) {
         const id = this.$route.params.id
         axios.post('/history', { a_id: id }).catch(error => {
-          alert(error)
+          console.log(error)
         })
       }
     },
@@ -128,13 +132,13 @@ export default {
           axios.delete(`/collections/${id}`).then(res => {
             this.isCollected = false
           }).catch(error => {
-            alert(error)
+            console.log(error)
           })
         } else {
           axios.post('/collections', { a_id: id }).then(res => {
             this.isCollected = true
           }).catch(error => {
-            alert(error)
+            console.log(error)
           })
         }
       }
@@ -151,7 +155,7 @@ export default {
             this.$refs.postList.$refs.lazyload.hide()
           }
         }).catch(error => {
-          alert(error)
+          console.log(error)
         })
       }
     },
@@ -168,7 +172,7 @@ export default {
           this.$router.push('/')
         }, 1000)
       }).catch(error => {
-        alert(error)
+        console.log(error)
       })
     }
   }
@@ -179,6 +183,7 @@ export default {
 @import '@/assets/variables.scss';
   .post {
     width:100%;
+    min-height:calc(100vh - 100px);
     display:flex;
     background-color:#f8f8f8;
     justify-content: center;
@@ -216,11 +221,14 @@ export default {
           }
         }
         .recommend{
-          width:100%;
           margin-top:20px;
           background-color:white;
           padding:30px;
           border-radius:8px;
+        }
+        img{
+          width:80px;
+          height:80px;
         }
       }
       .left{
@@ -310,5 +318,43 @@ export default {
     article{
       width:calc(100vw - 80px) !important;
     }
+  }
+  @keyframes dash {
+   0% {
+      stroke-dasharray: 1, 200;
+      stroke-dashoffset: 0;
+    }
+    50% {
+      stroke-dasharray: 130, 200;
+      stroke-dashoffset: -50;
+    }
+    100% {
+      stroke-dasharray: 130, 200;
+      stroke-dashoffset: -188;
+    }
+  }
+  @keyframes rotate {
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
+  }
+  .load {
+    position:absolute;
+    left: 50%;
+    top:50%;
+    margin-left: -40px;
+    margin-top:-40px;
+    width: 80px;
+    height: 80px;
+    animation: rotate 2s linear infinite;
+  }
+  .loading {
+      stroke: rgb(53, 157, 218);
+      stroke-width: 5;
+      fill: none;
+      animation: dash 1.5s linear infinite;
   }
 </style>

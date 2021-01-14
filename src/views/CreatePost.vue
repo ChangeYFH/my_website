@@ -22,7 +22,7 @@
 <script>
 import axios from 'axios'
 import marked from 'marked'
-import highlight from 'highlight.js'
+// import highlight from 'highlight.js'
 
 export default {
   name: 'CreatePost',
@@ -48,11 +48,11 @@ export default {
   computed: {
     // 当content改变时，使用marked将content变为带标签的形式，并且在下一次DOM更新循环之后将code中的内容进行高亮
     text () {
-      this.$nextTick(() => {
-        document.querySelectorAll('pre code').forEach(ele => {
-          highlight.highlightBlock(ele)
-        })
-      })
+      // this.$nextTick(() => {
+      //   document.querySelectorAll('pre code').forEach(ele => {
+      //     highlight.highlightBlock(ele)
+      //   })
+      // })
       return marked(this.content)
     }
   },

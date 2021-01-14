@@ -9,7 +9,7 @@
         <ul class="project-list">
           <li class="project" @click="gotoURL">
             <div class="img-container">
-              <img src="@/assets/animal_crossing.png">
+              <img src="https://website-1301851322.cos.ap-beijing.myqcloud.com/animal_crossing.png?imageMogr2/format/jpg/interlace/1">
             </div>
             <a>动物森友会攻略App</a>
             <article>通过该App可以按季节，地点，时间等条件来筛选动物森友会中的鱼类，昆虫，伙伴等。</article>
@@ -88,7 +88,7 @@ export default {
       })
     },
     gotoURL () {
-      window.location.href = 'http://animalcrossing.yanfenghua.cn'
+      window.location.href = 'http://www.animalcrossing.yanfenghua.cn'
     }
   }
 }

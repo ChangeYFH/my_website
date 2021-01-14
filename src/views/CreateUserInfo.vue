@@ -46,7 +46,7 @@ export default {
       // 从vuex中获取信息，如果没有则使用默认值
       sex: this.$store.state.user.sex || 'male',
       introduction: this.$store.state.user.introduction || '',
-      avatar: this.$store.state.user.avatar || 'https://website-1301851322.cos.ap-beijing.myqcloud.com/default.png'
+      avatar: this.$store.state.user.avatar + '?imageMogr2/format/jpg/interlace/1' || 'https://website-1301851322.cos.ap-beijing.myqcloud.com/default.png?imageMogr2/format/jpg/interlace/1'
     }
   },
   methods: {

@@ -1,5 +1,5 @@
 <template>
-  <div class="recommend">
+  <div class="post-list">
     <h3 v-if="title">{{title}}</h3>
     <lazyload @isBottom="isBottom" ref="lazyload">
       <ul>
@@ -63,7 +63,7 @@ export default {
 
 <style lang="scss" scoped>
 @import '@/assets/variables.scss';
-  .recommend{
+  .post-list{
     width:100%;
     h3{
       margin: 10px 0;
