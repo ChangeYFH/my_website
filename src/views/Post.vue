@@ -37,7 +37,6 @@ import Comment from '../components/Comment.vue'
 import PostList from '../components/PostList.vue'
 import marked from 'marked'
 import verifyLogin from '../mixins/verifyLogin.js'
-// import highlight from 'highlight'
 
 export default {
   name: 'Post',
