@@ -50,7 +50,7 @@ export default {
     Lazyload
   },
   mixins: [verifyLogin],
-  mounted () {
+  created () {
     this.getData()
   },
   methods: {

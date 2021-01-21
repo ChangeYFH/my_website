@@ -21,7 +21,7 @@ export default {
       page: 1
     }
   },
-  mounted () {
+  created () {
     this.getData()
   },
   methods: {

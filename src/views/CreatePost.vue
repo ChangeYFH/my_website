@@ -33,7 +33,7 @@ export default {
       category: ''
     }
   },
-  mounted () {
+  created () {
     this.getCategories()
     // 如果url上有id，则是要进行修改(编辑)，所以要从数据库获取之前的数据，并填充到页面中
     if (this.$route.params.id) {
